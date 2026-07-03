@@ -6,9 +6,10 @@ you may ask why? sometime i have have new th to leanr
 
 
 requirements:
-- a postgres db to fill in .env (see scaffold/env.example)
+- a postgres db to fill in dart
 
 how to:
+- set your db url in scaffold/dart_define.json
 - follow [db structure](./docs/db.md) as bellow to popult your db
 - enjoy
 
