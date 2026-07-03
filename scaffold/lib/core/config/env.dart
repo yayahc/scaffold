@@ -1,13 +1,13 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 abstract final class Env {
-  static Future<void> load() => dotenv.load(fileName: '.env');
+  static const String _databaseUrl = String.fromEnvironment('DATABASE_URL');
 
   static String get databaseUrl {
-    final url = dotenv.env['DATABASE_URL'];
-    if (url == null || url.isEmpty) {
-      throw StateError('DATABASE_URL is missing from .env');
+    if (_databaseUrl.isEmpty) {
+      throw StateError(
+        'DATABASE_URL is missing. Pass it via '
+        '--dart-define-from-file=dart_define.json (see dart_define.example.json).',
+      );
     }
-    return url;
+    return _databaseUrl;
   }
 }

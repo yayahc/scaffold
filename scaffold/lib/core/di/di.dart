@@ -15,8 +15,7 @@ final getIt = GetIt.instance;
 )
 Future<void> configureDependencies() => getIt.init();
 
-/// Provides dependencies that can't be constructed by annotation alone:
-/// async singletons and ones needing runtime values (the DB URL from .env).
+
 @module
 abstract class RegisterModule {
   @preResolve
