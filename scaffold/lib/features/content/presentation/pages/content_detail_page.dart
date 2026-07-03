@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:scaffold/core/di/di.dart';
 
-import '../../../../core/di/injection.dart';
 import '../../../quiz/domain/entities/quiz.dart';
 import '../../../quiz/presentation/pages/quiz_page.dart';
 import '../../domain/entities/content.dart';
@@ -17,7 +17,7 @@ class ContentDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => sl<ContentDetailCubit>()..load(id),
+      create: (_) => getIt.get<ContentDetailCubit>()..load(id),
       child: Scaffold(
         body: BlocBuilder<ContentDetailCubit, ContentDetailState>(
           builder: (context, state) {

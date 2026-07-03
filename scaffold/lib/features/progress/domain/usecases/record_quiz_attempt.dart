@@ -1,11 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/usecase/usecase.dart';
 import '../entities/content_progress.dart';
 import '../repositories/progress_repository.dart';
 
+@lazySingleton
 class RecordQuizAttempt
     implements UseCase<ContentProgress, RecordQuizAttemptParams> {
   const RecordQuizAttempt(this._repository);

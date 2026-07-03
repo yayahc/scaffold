@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/di/injection.dart';
+import '../../../../core/di/di.dart';
+import '../../../progress/domain/usecases/record_quiz_attempt.dart';
 import '../../domain/entities/quiz.dart';
 import '../cubit/quiz_cubit.dart';
 import '../widgets/question_view.dart';
@@ -23,7 +24,11 @@ class QuizPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          QuizCubit(quiz: quiz, contentId: contentId, recordAttempt: sl()),
+          QuizCubit(
+            quiz: quiz,
+            contentId: contentId,
+            recordAttempt: getIt<RecordQuizAttempt>(),
+          ),
       child: Scaffold(
         appBar: AppBar(title: Text(title)),
         body: BlocBuilder<QuizCubit, QuizState>(

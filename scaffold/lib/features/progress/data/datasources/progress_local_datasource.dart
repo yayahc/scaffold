@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/error/exceptions.dart';
@@ -12,6 +13,7 @@ abstract interface class ProgressLocalDataSource {
   Future<void> write(ContentProgressModel progress);
 }
 
+@LazySingleton(as: ProgressLocalDataSource)
 class ProgressLocalDataSourceImpl implements ProgressLocalDataSource {
   ProgressLocalDataSourceImpl(this._prefs);
 

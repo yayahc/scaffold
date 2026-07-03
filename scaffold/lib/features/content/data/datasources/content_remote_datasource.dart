@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:postgres/postgres.dart';
 
 import '../../../../core/database/postgres_client.dart';
@@ -9,6 +10,7 @@ abstract interface class ContentRemoteDataSource {
   Future<ContentModel> getContentById(String id);
 }
 
+@LazySingleton(as: ContentRemoteDataSource)
 class ContentRemoteDataSourceImpl implements ContentRemoteDataSource {
   ContentRemoteDataSourceImpl(this._client);
 

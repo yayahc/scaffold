@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../progress/domain/usecases/get_content_progress.dart';
 import '../../../progress/domain/usecases/unlock_content.dart';
@@ -10,6 +11,7 @@ import '../../domain/usecases/get_content_by_id.dart';
 
 part 'content_detail_state.dart';
 
+@injectable
 class ContentDetailCubit extends Cubit<ContentDetailState> {
   ContentDetailCubit(
     this._getContentById,

@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
@@ -6,6 +7,7 @@ import '../../domain/entities/content.dart';
 import '../../domain/repositories/content_repository.dart';
 import '../datasources/content_remote_datasource.dart';
 
+@LazySingleton(as: ContentRepository)
 class ContentRepositoryImpl implements ContentRepository {
   ContentRepositoryImpl(this._remote);
 

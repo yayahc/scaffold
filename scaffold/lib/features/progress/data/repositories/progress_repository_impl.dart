@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
@@ -9,6 +10,7 @@ import '../models/content_progress_model.dart';
 
 /// Read-modify-write over the local datasource. Owns the merge rules
 /// (e.g. best-score-wins) so the datasource stays a dumb key/value store.
+@LazySingleton(as: ProgressRepository)
 class ProgressRepositoryImpl implements ProgressRepository {
   ProgressRepositoryImpl(this._local);
 
