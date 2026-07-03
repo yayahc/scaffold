@@ -12,7 +12,6 @@ class QuizState extends Equatable {
   final int index;
   final Map<String, Object?> answers;
 
-  /// Null until the quiz is submitted and graded.
   final QuizResult? result;
 
   Question get currentQuestion => quiz.questions[index];

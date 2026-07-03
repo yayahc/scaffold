@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../features/content/data/datasources/content_remote_datasource.dart';
 import '../../features/content/data/repositories/content_repository_impl.dart';
@@ -7,12 +8,21 @@ import '../../features/content/domain/usecases/get_content_by_id.dart';
 import '../../features/content/domain/usecases/get_contents.dart';
 import '../../features/content/presentation/cubit/content_detail_cubit.dart';
 import '../../features/content/presentation/cubit/content_list_cubit.dart';
+import '../../features/progress/data/datasources/progress_local_datasource.dart';
+import '../../features/progress/data/repositories/progress_repository_impl.dart';
+import '../../features/progress/domain/repositories/progress_repository.dart';
+import '../../features/progress/domain/usecases/get_all_progress.dart';
+import '../../features/progress/domain/usecases/get_content_progress.dart';
+import '../../features/progress/domain/usecases/record_quiz_attempt.dart';
+import '../../features/progress/domain/usecases/unlock_content.dart';
 import '../config/env.dart';
 import '../database/postgres_client.dart';
 
 final sl = GetIt.instance;
 
 Future<void> initDependencies() async {
+  final prefs = await SharedPreferences.getInstance();
+  sl.registerSingleton<SharedPreferences>(prefs);
   sl.registerLazySingleton(() => PostgresClient(Env.databaseUrl));
 
   sl.registerLazySingleton<ContentRemoteDataSource>(
@@ -23,6 +33,18 @@ Future<void> initDependencies() async {
   );
   sl.registerLazySingleton(() => GetContents(sl()));
   sl.registerLazySingleton(() => GetContentById(sl()));
+
+  sl.registerLazySingleton<ProgressLocalDataSource>(
+    () => ProgressLocalDataSourceImpl(sl()),
+  );
+  sl.registerLazySingleton<ProgressRepository>(
+    () => ProgressRepositoryImpl(sl()),
+  );
+  sl.registerLazySingleton(() => GetAllProgress(sl()));
+  sl.registerLazySingleton(() => GetContentProgress(sl()));
+  sl.registerLazySingleton(() => UnlockContent(sl()));
+  sl.registerLazySingleton(() => RecordQuizAttempt(sl()));
+
   sl.registerFactory(() => ContentListCubit(sl()));
   sl.registerFactory(() => ContentDetailCubit(sl()));
 }

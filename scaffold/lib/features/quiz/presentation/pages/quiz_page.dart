@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/di/injection.dart';
 import '../../domain/entities/quiz.dart';
 import '../cubit/quiz_cubit.dart';
 import '../widgets/question_view.dart';
 import '../widgets/quiz_result_view.dart';
 
 class QuizPage extends StatelessWidget {
-  const QuizPage({required this.quiz, required this.title, super.key});
+  const QuizPage({
+    required this.quiz,
+    required this.title,
+    required this.contentId,
+    super.key,
+  });
 
   final Quiz quiz;
   final String title;
+  final String contentId;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => QuizCubit(quiz: quiz),
+      create: (_) =>
+          QuizCubit(quiz: quiz, contentId: contentId, recordAttempt: sl()),
       child: Scaffold(
         appBar: AppBar(title: Text(title)),
         body: BlocBuilder<QuizCubit, QuizState>(

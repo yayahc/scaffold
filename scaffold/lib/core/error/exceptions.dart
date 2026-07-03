@@ -17,3 +17,11 @@ class NotFoundException implements Exception {
   @override
   String toString() => 'NotFoundException: $message';
 }
+
+class StorageException implements Exception {
+  const StorageException([this.message = 'Local storage error']);
+  final String message;
+
+  @override
+  String toString() => 'StorageException: $message';
+}

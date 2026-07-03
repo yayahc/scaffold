@@ -47,6 +47,7 @@ class ContentDetailPage extends StatelessWidget {
   Widget _renderer(Content content) {
     return switch (content.type) {
       ContentType.quiz => QuizPage(
+          contentId: content.id,
           title: content.title,
           quiz: Quiz.fromPayload(content.payload),
         ),

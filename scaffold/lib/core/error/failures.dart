@@ -20,3 +20,7 @@ class NotFoundFailure extends Failure {
 class ParsingFailure extends Failure {
   const ParsingFailure([super.message = 'Failed to parse data']);
 }
+
+class StorageFailure extends Failure {
+  const StorageFailure([super.message = 'Local storage error']);
+}

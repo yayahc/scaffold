@@ -34,7 +34,14 @@ class ContentListPage extends StatelessWidget {
                     final content = state.contents[i];
                     return ContentCard(
                       content: content,
-                      onTap: () => context.push('/content/${content.id}'),
+                      progress: state.progress[content.id],
+                      onTap: () async {
+                        await context.push('/content/${content.id}');
+                        // Reflect any progress made while inside the item.
+                        if (context.mounted) {
+                          context.read<ContentListCubit>().load();
+                        }
+                      },
                     );
                   },
                 );

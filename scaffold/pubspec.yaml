@@ -41,6 +41,7 @@ dependencies:
   equatable: ^2.0.8
   postgres: ^3.5.7
   flutter_dotenv: ^6.0.1
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
   flutter_test:
