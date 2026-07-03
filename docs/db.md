@@ -15,3 +15,6 @@ model content {
 enum ContentType {
     quiz
 }
+
+run ./schema.sql in your db
+see ./seed.sql as example
