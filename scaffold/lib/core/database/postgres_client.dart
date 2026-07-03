@@ -21,7 +21,7 @@ class PostgresClient {
 
     return _connection = await Connection.open(
       endpoint,
-      settings: const ConnectionSettings(sslMode: SslMode.disable),
+      settings: const ConnectionSettings(sslMode: SslMode.require),
     );
   }
 
