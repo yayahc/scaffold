@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:injectable/injectable.dart';
 import 'package:postgres/postgres.dart';
 
@@ -16,6 +18,11 @@ class ContentRemoteDataSourceImpl implements ContentRemoteDataSource {
 
   final PostgresClient _client;
 
+  Map<String, dynamic> _decodeRow(Map<String, dynamic> row) => row.map(
+    (key, value) =>
+        MapEntry(key, value is UndecodedBytes ? value.asString : value),
+  );
+
   @override
   Future<List<ContentModel>> getContents() async {
     try {
@@ -31,9 +38,10 @@ class ContentRemoteDataSourceImpl implements ContentRemoteDataSource {
         '''),
       );
       return result
-          .map((row) => ContentModel.fromRow(row.toColumnMap()))
+          .map((row) => ContentModel.fromRow(_decodeRow(row.toColumnMap())))
           .toList();
     } catch (e) {
+      log('Error fetching contents: $e');
       throw DatabaseException(e.toString());
     }
   }
@@ -49,7 +57,7 @@ class ContentRemoteDataSourceImpl implements ContentRemoteDataSource {
       if (result.isEmpty) {
         throw NotFoundException('No content with id $id');
       }
-      return ContentModel.fromRow(result.first.toColumnMap());
+      return ContentModel.fromRow(_decodeRow(result.first.toColumnMap()));
     } on NotFoundException {
       rethrow;
     } catch (e) {

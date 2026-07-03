@@ -29,10 +29,9 @@ class ContentListCubit extends Cubit<ContentListState> {
         ),
       ),
       (contents) async {
-        // Progress is best-effort — an empty map on failure still lists content.
-        final progress = (await _getAllProgress(const NoParams())).getOrElse(
-          (_) => const {},
-        );
+        final progress = (await _getAllProgress(
+          const NoParams(),
+        )).getOrElse((_) => const {});
         emit(
           state.copyWith(
             status: ContentListStatus.success,

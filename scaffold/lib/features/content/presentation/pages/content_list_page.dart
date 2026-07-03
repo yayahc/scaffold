@@ -21,7 +21,9 @@ class ContentListPage extends StatelessWidget {
               case ContentListStatus.loading:
                 return const Center(child: CircularProgressIndicator());
               case ContentListStatus.failure:
-                return Center(child: Text(state.errorMessage ?? 'Something went wrong'));
+                return Center(
+                  child: Text(state.errorMessage ?? 'Something went wrong'),
+                );
               case ContentListStatus.success:
                 if (state.contents.isEmpty) {
                   return const Center(child: Text('No content yet'));
@@ -36,7 +38,6 @@ class ContentListPage extends StatelessWidget {
                       progress: state.progress[content.id],
                       onTap: () async {
                         await context.push('/content/${content.id}');
-                        // Reflect any progress made while inside the item.
                         if (context.mounted) {
                           context.read<ContentListCubit>().load();
                         }
