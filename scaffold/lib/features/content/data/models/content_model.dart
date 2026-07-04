@@ -38,4 +38,34 @@ class ContentModel extends Content {
       updatedAt: row['updated_at'] as DateTime,
     );
   }
+
+  factory ContentModel.fromJson(Map<String, dynamic> json) {
+    return ContentModel(
+      id: json['id'] as String,
+      type: ContentType.fromString(json['type'] as String),
+      title: json['title'] as String,
+      description: json['description'] as String?,
+      coverImage: json['cover_image'] as String?,
+      published: json['published'] as bool,
+      locked: json['locked'] as bool,
+      unlockCode: json['unlock_code'] as String?,
+      payload: (json['payload'] as Map?)?.cast<String, dynamic>() ?? const {},
+      createdAt: DateTime.parse(json['created_at'] as String),
+      updatedAt: DateTime.parse(json['updated_at'] as String),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'type': type.name,
+    'title': title,
+    'description': description,
+    'cover_image': coverImage,
+    'published': published,
+    'locked': locked,
+    'unlock_code': unlockCode,
+    'payload': payload,
+    'created_at': createdAt.toIso8601String(),
+    'updated_at': updatedAt.toIso8601String(),
+  };
 }
