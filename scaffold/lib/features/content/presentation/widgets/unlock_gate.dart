@@ -32,33 +32,75 @@ class _UnlockGateState extends State<UnlockGate> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.lock_outline, size: 56),
-            const SizedBox(height: 16),
-            Text(widget.title, style: Theme.of(context).textTheme.titleLarge),
-            const SizedBox(height: 24),
-            TextField(
-              controller: _controller,
-              autofocus: true,
-              decoration: InputDecoration(
-                labelText: 'Unlock code',
-                errorText: _error ? 'Incorrect code' : null,
-                border: const OutlineInputBorder(),
-              ),
-              onChanged: (_) {
-                if (_error) setState(() => _error = false);
-              },
-              onSubmitted: (_) => _submit(),
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return SafeArea(
+      child: Column(
+        children: [
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              child: BackButton(color: scheme.onSurface),
             ),
-            const SizedBox(height: 16),
-            FilledButton(onPressed: _submit, child: const Text('Unlock')),
-          ],
-        ),
+          ),
+          Expanded(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      width: 64,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        color: scheme.surfaceContainerHighest,
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      alignment: Alignment.center,
+                      child: Icon(Icons.lock_outline,
+                          size: 30, color: scheme.onSurface),
+                    ),
+                    const SizedBox(height: 24),
+                    Text(
+                      'Enter your code',
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.headlineSmall,
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.title,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 28),
+                    TextField(
+                      controller: _controller,
+                      autofocus: true,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.titleLarge,
+                      decoration: InputDecoration(
+                        hintText: 'Unlock code',
+                        errorText: _error ? 'Incorrect code' : null,
+                      ),
+                      onChanged: (_) {
+                        if (_error) setState(() => _error = false);
+                      },
+                      onSubmitted: (_) => _submit(),
+                    ),
+                    const SizedBox(height: 16),
+                    FilledButton(
+                      onPressed: _submit,
+                      child: const Text('Unlock'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
