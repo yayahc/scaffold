@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Flutter (lib/main.dart)",
+            "type": "dart",
+            "request": "launch",
+            "cwd": "scaffold",
+            "program": "lib/main.dart",
+            "args": [
+                "--dart-define-from-file=dart_define.json"
+            ]
+        }
+    ]
+}
