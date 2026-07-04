@@ -34,56 +34,28 @@ class ContentListPage extends StatelessWidget {
                       subtitle: 'New content will appear here.',
                     );
                   }
-                  return CustomScrollView(
-                    slivers: [
-                      const SliverToBoxAdapter(child: _Header()),
-                      SliverPadding(
-                        padding: const EdgeInsets.fromLTRB(20, 4, 20, 32),
-                        sliver: SliverList.separated(
-                          itemCount: state.contents.length,
-                          separatorBuilder: (_, __) =>
-                              const SizedBox(height: 12),
-                          itemBuilder: (context, i) {
-                            final content = state.contents[i];
-                            return ContentCard(
-                              content: content,
-                              progress: state.progress[content.id],
-                              onTap: () async {
-                                await context.push('/content/${content.id}');
-                                if (context.mounted) {
-                                  context.read<ContentListCubit>().load();
-                                }
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                  return ListView.separated(
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 32),
+                    itemCount: state.contents.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    itemBuilder: (context, i) {
+                      final content = state.contents[i];
+                      return ContentCard(
+                        content: content,
+                        progress: state.progress[content.id],
+                        onTap: () async {
+                          await context.push('/content/${content.id}');
+                          if (context.mounted) {
+                            context.read<ContentListCubit>().reload();
+                          }
+                        },
+                      );
+                    },
                   );
               }
             },
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _Header extends StatelessWidget {
-  const _Header();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text('Library', style: theme.textTheme.displaySmall),
-          const SizedBox(height: 4),
-          Text('Pick up where you left off', style: theme.textTheme.bodyMedium),
-        ],
       ),
     );
   }

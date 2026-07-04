@@ -40,7 +40,6 @@ import '../../features/progress/domain/usecases/get_content_progress.dart'
 import '../../features/progress/domain/usecases/record_quiz_attempt.dart'
     as _i499;
 import '../../features/progress/domain/usecases/unlock_content.dart' as _i837;
-import '../../features/splash/presentation/cubit/splash_cubit.dart' as _i125;
 import '../database/postgres_client.dart' as _i933;
 import 'di.dart' as _i913;
 
@@ -107,12 +106,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i584.ContentListCubit>(
       () => _i584.ContentListCubit(
+        gh<_i772.RefreshContents>(),
         gh<_i458.GetContents>(),
         gh<_i325.GetAllProgress>(),
       ),
-    );
-    gh.factory<_i125.SplashCubit>(
-      () => _i125.SplashCubit(gh<_i772.RefreshContents>()),
     );
     return this;
   }
