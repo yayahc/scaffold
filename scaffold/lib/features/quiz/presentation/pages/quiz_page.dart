@@ -42,7 +42,8 @@ class QuizPage extends StatelessWidget {
             final theme = Theme.of(context);
             final cubit = context.read<QuizCubit>();
             final total = state.quiz.questions.length;
-            final answered = state.answers[state.currentQuestion.id] != null;
+            final answered = state.isCurrentAnswered;
+            final revealed = state.isCurrentRevealed;
             return SafeArea(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -73,6 +74,7 @@ class QuizPage extends StatelessWidget {
                       child: QuestionView(
                         question: state.currentQuestion,
                         selected: state.answers[state.currentQuestion.id],
+                        revealed: revealed,
                         onChanged: (value) =>
                             cubit.answer(state.currentQuestion.id, value),
                       ),
@@ -94,13 +96,16 @@ class QuizPage extends StatelessWidget {
                         Expanded(
                           flex: state.index > 0 ? 1 : 2,
                           child: FilledButton(
-                            onPressed: answered
-                                ? (state.isLastQuestion
+                            onPressed: !revealed
+                                ? (answered ? cubit.reveal : null)
+                                : (state.isLastQuestion
                                     ? cubit.submit
-                                    : cubit.next)
-                                : null,
+                                    : cubit.next),
                             child: Text(
-                                state.isLastQuestion ? 'Submit' : 'Next'),
+                              !revealed
+                                  ? 'Check'
+                                  : (state.isLastQuestion ? 'Submit' : 'Next'),
+                            ),
                           ),
                         ),
                       ],

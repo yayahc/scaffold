@@ -27,9 +27,16 @@ class QuizCubit extends Cubit<QuizState> {
   final GradeQuiz _grade;
 
   void answer(String questionId, Object? value) {
+    if (state.revealed.contains(questionId)) return;
     final answers = Map<String, Object?>.from(state.answers)
       ..[questionId] = value;
     emit(state.copyWith(answers: answers));
+  }
+
+  void reveal() {
+    final id = state.currentQuestion.id;
+    if (state.revealed.contains(id)) return;
+    emit(state.copyWith(revealed: {...state.revealed, id}));
   }
 
   void next() {
