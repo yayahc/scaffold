@@ -7,7 +7,7 @@ VALUES (
   false,
   '{
     "passThreshold": 0.7,
-    "shuffle": true,
+    "isRandom": false,
     "questions": [
       {
         "id": "q1",
@@ -51,6 +51,7 @@ VALUES (
   'OPEN123',
   '{
     "passThreshold": 0.5,
+    "isRandom": true,
     "questions": [
       {
         "id": "q1",

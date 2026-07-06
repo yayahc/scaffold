@@ -20,7 +20,17 @@ class QuizCubit extends Cubit<QuizState> {
   })  : _contentId = contentId,
         _recordAttempt = recordAttempt,
         _grade = grade,
-        super(QuizState(quiz: quiz));
+        super(QuizState(quiz: _shuffled(quiz)));
+
+  static Quiz _shuffled(Quiz quiz) {
+    if (!quiz.random) return quiz;
+    final questions = [...quiz.questions]..shuffle();
+    return Quiz(
+      questions: questions,
+      passThreshold: quiz.passThreshold,
+      random: quiz.random,
+    );
+  }
 
   final String _contentId;
   final RecordQuizAttempt _recordAttempt;
@@ -30,13 +40,10 @@ class QuizCubit extends Cubit<QuizState> {
     if (state.revealed.contains(questionId)) return;
     final answers = Map<String, Object?>.from(state.answers)
       ..[questionId] = value;
-    emit(state.copyWith(answers: answers));
-  }
-
-  void reveal() {
-    final id = state.currentQuestion.id;
-    if (state.revealed.contains(id)) return;
-    emit(state.copyWith(revealed: {...state.revealed, id}));
+    emit(state.copyWith(
+      answers: answers,
+      revealed: {...state.revealed, questionId},
+    ));
   }
 
   void next() {

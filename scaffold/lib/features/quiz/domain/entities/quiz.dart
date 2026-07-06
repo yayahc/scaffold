@@ -6,20 +6,20 @@ class Quiz extends Equatable {
   const Quiz({
     required this.questions,
     this.passThreshold = 0.7,
-    this.shuffle = false,
+    this.random = false,
   });
 
   final List<Question> questions;
 
   final double passThreshold;
 
-  final bool shuffle;
+  final bool random;
 
   factory Quiz.fromPayload(Map<String, dynamic> payload) {
     final rawQuestions = (payload['questions'] as List? ?? const []);
     return Quiz(
       passThreshold: (payload['passThreshold'] as num?)?.toDouble() ?? 0.7,
-      shuffle: payload['shuffle'] as bool? ?? false,
+      random: payload['isRandom'] as bool? ?? false,
       questions: rawQuestions
           .cast<Map<String, dynamic>>()
           .map(_questionFromJson)
@@ -57,14 +57,16 @@ class Quiz extends Equatable {
   static List<AnswerOption> _options(Map<String, dynamic> j) {
     return (j['options'] as List)
         .cast<Map<String, dynamic>>()
-        .map((o) => AnswerOption(
-              id: o['id'] as String,
-              label: o['label'] as String,
-              correct: o['correct'] as bool? ?? false,
-            ))
+        .map(
+          (o) => AnswerOption(
+            id: o['id'] as String,
+            label: o['label'] as String,
+            correct: o['correct'] as bool? ?? false,
+          ),
+        )
         .toList();
   }
 
   @override
-  List<Object?> get props => [questions, passThreshold, shuffle];
+  List<Object?> get props => [questions, passThreshold, random];
 }

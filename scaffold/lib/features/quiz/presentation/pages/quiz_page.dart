@@ -96,16 +96,13 @@ class QuizPage extends StatelessWidget {
                         Expanded(
                           flex: state.index > 0 ? 1 : 2,
                           child: FilledButton(
-                            onPressed: !revealed
-                                ? (answered ? cubit.reveal : null)
-                                : (state.isLastQuestion
+                            onPressed: answered
+                                ? (state.isLastQuestion
                                     ? cubit.submit
-                                    : cubit.next),
+                                    : cubit.next)
+                                : null,
                             child: Text(
-                              !revealed
-                                  ? 'Check'
-                                  : (state.isLastQuestion ? 'Submit' : 'Next'),
-                            ),
+                                state.isLastQuestion ? 'Submit' : 'Next'),
                           ),
                         ),
                       ],
